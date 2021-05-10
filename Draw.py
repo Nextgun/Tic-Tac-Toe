@@ -1,5 +1,5 @@
 import pygame
-import logic
+
 
 
 # draw will recieve input and proccessing all the drawing
@@ -7,21 +7,35 @@ import logic
 # later I will convert into a class
 
 class myDraw():
-    def __init__(self, width=1920, height=1080):
-        self.board_size = 3
-        self.width = width
-        self.height = height
-        self.w = self.width / self.board_size
-        self.h = self.height / self.board_size
-        
-        self.screen = pygame.display.set_mode([self.width, self.height])
-        self.screen.fill([255,255,255])
+    width = 640
+    height = 360
+    #def __init__(, width=640, height=360):
+    board_size = 3
+    #width = width
+    #height = height
+    w = width / board_size
+    h = height / board_size
+    
+    screen = pygame.display.set_mode([width, height])
+    screen.fill([255,255,255])
 
-        self.grid_size = self.height / 3
+    grid_size = height / 3
 
+    @classmethod
+    def change_res(cls, w, h):
+        witdh = w
+        height = h
 
-   
+    # this code should create the screen and return it, currently not working, not implemented
+    def Screen(width=640, height=360):
+        screen = pygame.display.set_mode([width, height])
+        screen.fill([255,255,255])
+        #return screen
+
     def Board(self):
+        #.Screen()
+        
+        # draws the shaded tiles
         self.tile_shade()
         # draw the grid lines
         self.grid_lines()
@@ -32,28 +46,28 @@ class myDraw():
             # Board needs to iterate through the board data list 
             # and draw each players move accourding to position
         
-
     def tile_shade(self):
+        import logic as l
         # draws the white rectangles
         for i in range(0,9,2):
-            pygame.draw.rect(self.screen, [255,255,255], logic.Rect_list[i], 0)
+            pygame.draw.rect(myDraw.screen, [255,255,255], l.Rect_list[i], 0)
         # draws the gray rectangles
         for i in range(1,9,2):
-            pygame.draw.rect(self.screen, [197,197,197], logic.Rect_list[i], 0)
+            pygame.draw.rect(myDraw.screen, [197,197,197], l.Rect_list[i], 0)
 
     def grid_lines(self):
         # not the prettiest
         # draws grid lines, is scalable to screen size
-        gridlines = [ [self.width * 1/3, 0, 2, self.height],
-                    [self.width * 2/3, 0, 2, self.height],
-                    [0, self.height * 1/3, self.width, 0], 
-                    [0, self.height * 2/3, self.width, 0] ]
+        gridlines = [ [myDraw.width * 1/3, 0, 2, myDraw.height],
+                      [myDraw.width * 2/3, 0, 2, myDraw.height],
+                      [0, myDraw.height * 1/3, myDraw.width, 0], 
+                      [0, myDraw.height * 2/3, myDraw.width, 0] ]
         for line in gridlines:
-            pygame.draw.rect(self.screen, [0,0,0], line, 0)
+            pygame.draw.rect(myDraw.screen, [0,0,0], line, 0)
 
     def Move(self):
-        w = self.width / 3
-        h = self.height / 3
+        w = width / 3
+        h = height / 3
 
         if icon == "X":
             #write code to draw x in pygame
@@ -70,17 +84,17 @@ class myDraw():
 
 
     def get_position(self):
-        for row in range(self.board_size):
-            for column in range(self.board_size):
+        for row in range(board_size):
+            for column in range(board_size):
                 print("the row is ", row+1)
                 print("the column is ", column+1)
-                pos = self.board_data[row][column]
+                pos = board_data[row][column]
                 print("position on board is ", pos)
                 
   
     
-    def draw(self):
-        self.screen.draw.rect
+    def fuckdraw(self):
+        screen.draw.rect
                 
 
         # j for y
@@ -98,3 +112,5 @@ class myDraw():
         print(1,2,3)
         print(4,5,6)
         print(7,8,9)
+
+print ("i am Draw module and I work")

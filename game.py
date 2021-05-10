@@ -1,15 +1,21 @@
 import pygame, sys
-from player import Player
-from drawer import myDraw
+#from player import *
+
+from logic import *
+from Draw import myDraw
+import player as pl
+#-------------------------------------------------------------------------
 
 pygame.init()
 
 # object creation
-draw= myDraw()
-p1 = Player("X")
-p2 = Player("O")
+draw = myDraw()
+p1 = pl.HumanPlayer("X")
+p2 = pl.HumanPlayer("O")
 
 current_player = p1
+
+print("i am game module before the loop and I work")
 
 screen = "game"
 running = True # variable to keep the main loop running
@@ -29,7 +35,7 @@ while running:
                 # was it the Escape Key? if so, stop the loop
                 if event.key == pygame.K_ESCAPE:
                     running == False
-                    
+
             # draw board
             draw.Board()
 
