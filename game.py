@@ -1,60 +1,49 @@
 import pygame, sys
 from player import Player
-from board import Game_Board 
-from board import Tile
+from drawer import myDraw
 
 pygame.init()
 
 # object creation
+draw= myDraw()
 p1 = Player("X")
 p2 = Player("O")
 
-Tic_Tac_Toe = Game_Board()
-Tic_Tac_Toe.draw_grid_lines()
+current_player = p1
 
-Tic_Tac_Toe.get_position()
-
+screen = "game"
 running = True # variable to keep the main loop running
-
-
 # Main Loop
 while running: 
-    # look at every event in the queue
-    for event in pygame.event.get():
-        # did the user click the window close button? if so, stop the loop
-        if event.type == pygame.QUIT:
-            running = False
-        # did the user hit a key?
-        elif event.type == pygame.KEYDOWN:
-            # was it the Escape Key? if so, stop the loop
-            if event.key == K_ESCAPE:
-                running == False
+    if screen == "title":
+        # write title screen code here
+        pass
+    if screen == "game":
+        # look at every event in the queue
+        for event in pygame.event.get():
+            # did the user click the window close button? if so, stop the loop
+            if event.type == pygame.QUIT:
+                running = False
+            # did the user hit a key?
+            if event.type == pygame.KEYDOWN:
+                # was it the Escape Key? if so, stop the loop
+                if event.key == pygame.K_ESCAPE:
+                    running == False
+                    
+            # draw board
+            draw.Board()
 
-    
-    #write code here that looks for player 1 input
-    #write code here that looks for player 2 input
-    # everythine will be drawn on the Tic_Tac_Toe.screen
+            # get player input
+            current_player.get_input(event)
 
-
-
-
-    pygame.display.flip()
+            pygame.display.flip()
+    if screen == "gameover":
+        # write game over screen code here
+        pass
 pygame.quit()
 
 
 
-# j for y
-for j in range(10):
-    # i for x
-    for i in range(10):
-        pass
-
-def looploop():
-    for i in range(10,0,-2):
-        print(i)
-
-looploop()
-
-print(1,2,3)
-print(4,5,6)
-print(7,8,9)
+    #write code here that looks for player 1 input
+    #write code here that looks for player 2 input
+    # everythine will be drawn on the Tic_Tac_Toe.screen
