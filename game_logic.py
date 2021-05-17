@@ -22,6 +22,7 @@ class TTT_Game():
             y = move_xy_pos[1]
             print(x)
             print(y)
+            
         
 
     def check_win_condition(self, player_icon):
