@@ -15,9 +15,10 @@ current_player = p1
 
 print("i am game module before the loop and I work")
 
-# Utility function that I see myself using a lot
-# function that checks if the game is running
-# if not running close game/app
+# Utility function 
+# that I see myself using a lot
+# Function that checks if the game is running
+# if not running close game/app.
 def check_if_running(event, running_test):
         # did the user click the window close button? if so, stop the loop
         if event.type == pygame.QUIT:
@@ -35,34 +36,35 @@ screen = "game" # Default screen that is drawn when the game starts
 running = True # variable to keep the main loop running
 # Main Loop
 while running: 
-    # look at every event in the queue
-    for event in pygame.event.get():
 
         
 
         while screen == "title_screen":
-            # look at every event in the queue
+            # wait for an event (left mouse click) to happen
             event = pygame.event.wait()
             # always check if running
             # if true continue
             # if false, close game
             running = check_if_running(event, running)
-            
+
             # write title screen code here
             pygame.display.flip()
             
         while screen == "game":
-            # look at every event in the queue
+            # wait for an event (left mouse click) to happen
             event = pygame.event.wait()
             # always check if running
             # if true continue
             # if false, close game
+            print("before check if running")
             running = check_if_running(event, running)
+            print("after check if running ")
+            print("i am variable running",running)
             
             TicTacToe.game_loop(event, current_player)
         
         while screen == "end_screen":
-            # look at every event in the queue
+            # wait for an event (left mouse click) to happen
             event = pygame.event.wait()
             # always check if running
             # if true continue

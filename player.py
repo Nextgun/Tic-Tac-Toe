@@ -22,12 +22,12 @@ class HumanPlayer():
                     
 
     def check_button_collision(self):
-        # can potentially move into the get_input function
+        # Imports the rectangles we drew 
+        # in Draw module to check for collision.
         from Draw import Rect_list
             
         # loop through each tile available
         for rect in Rect_list: 
-            #print("i am in the rectlist loop")
             # check if the rect collides with the mouse pos
             
             #print ("i am in check button collision function")
@@ -47,10 +47,12 @@ class HumanPlayer():
 
     
     def get_rect_xy(self, rect):
-        tile_x_pos = ceil(rect[0]/tile_W) # gets the rect x and converts into an int from 0-2
-        tile_y_pos = ceil(rect[1]/tile_H) # gets the rect y and converts into an int from 0-2
-        print(tile_x_pos)
-        print(tile_y_pos)
+        # gets the rect x and converts into an int from 0-2
+        tile_x_pos = ceil(rect[0]/tile_W) 
+
+        # gets the rect y and converts into an int from 0-2
+        tile_y_pos = ceil(rect[1]/tile_H) 
+
         return (tile_x_pos, tile_y_pos)
     
 
