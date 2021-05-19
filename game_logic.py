@@ -35,30 +35,86 @@ class TTT_Game():
                 player.icon = "X"
 
     def check_win_condition(self, player_icon):
+        score = 0
+        Win = False
+        size_of_array = len(self.board_data) #length of board_data list
+
         # i want to loop through the tiles in board data
         # check if 3 Y's or 3 X's and the same icon
         #   if so, current player wins
 
-        size_of_array = len(self.board_data) #length of board_data list
-        # loop through using the size_of_array as the upperbounds of the loop
+
+        #---------------------------------------------------------------------------
+
+        # seperate into function. call it horizontal_check
+        # win condition for  * * *    horizontal
+        for y in range(size_of_array):
+            for x in y:
+                if self.board_data[y][x] == player_icon:
+                    score += 1
+                    if score == 3:
+                        Win = True
+            if score != 3:
+                # reset score to 0 after every check
+                score = 0
+
+        #---------------------------------------------------------------------------
+
+        # seperate into function. call it vertical_check
+        #                      * 
+        # win condition for    *      vertical
+        #                      * 
+        for x in range(size_of_array):
+            for y in x:
+                if self.board_data[y][x] == player_icon:
+                    score += 1
+                    if score == 3:
+                        Win = True
+            if score != 3:
+                # reset score to 0 after every check
+                score = 0
+
+        #---------------------------------------------------------------------------
+
+        # seperate into function. call it left_to_right_diagnal_check
+        #                    *
+        # win condition for    *      diagnal left to right
+        #                        *
         for i in range(size_of_array):
-            # logical test to see if game won or stalemate
-            pass
+            if self.board_data[i][i] == player_icon:
+                score += 1
+                if score == 3:
+                    Win = True
+        if score != 3:
+            # reset score to 0 after every check
+            score = 0
 
-        # iterates through the y axis
-        for Y_axis in self.board_data:
-            print("i am y axis in checkwinconddition:",Y_axis)
-            #if self.board_data[0]
+        #---------------------------------------------------------------------------
 
-            for x_axis in Y_axis:
-                print("i am x axis in checkwincondition", x_axis)
-                if x_axis == player_icon:
-                    # write code that checks if all the x values are the same icon
-                    # if so, then you win
-                    print("i am inside if x axis == player_icon")
-                    pass
-        # in order to iterate properly, i need to use board size as uppperbound
-        # for i in range(0, boardsize):
+        # Need to redo this section of the logical test because it will not work,
+        # also need to seperate all logical tests into seperate functions,
+        # then need to test all the logical tests using those functions.
+
+        # seperate into function. call it right_to_left_diagnal_check
+        #                        *
+        # win condition for    *      diagnal right to left
+        #                    *  
+        a = [ ]
+        for A in range(size_of_array):
+            a.append(A)
+        for y in range(size_of_array):  # this section is not going to work because it is still in a nested loop. so it will iterate through entire grid
+            for x in a:
+                if self.board_data[y][x] == player_icon:
+                    score += 1
+                    if score == 3:
+                        win = True
+                    elif score != 3:
+                        # reset score to 0 after every check
+                        score = 0
+        
+        #---------------------------------------------------------------------------
+
+
         # inside i check if all are the same
         # if so , then win
         # else, i need to increment to check the second and third rows.

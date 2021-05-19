@@ -30,6 +30,7 @@ def check_if_running(event, running_test):
             if event.key == pygame.K_ESCAPE:
                 running_test = False
                 return running_test
+        
 
 
 screen = "game" # Default screen that is drawn when the game starts
@@ -37,42 +38,41 @@ running = True # variable to keep the main loop running
 # Main Loop
 while running: 
 
+    while screen == "title_screen":
+        # wait for an event (left mouse click) to happen
+        event = pygame.event.wait()
+        # always check if running
+        # if true continue
+        # if false, close game
+        running = check_if_running(event, running)
+        if running == False:
+            break
+        # write title screen code here
+        pygame.display.flip()
         
-
-        while screen == "title_screen":
-            # wait for an event (left mouse click) to happen
-            event = pygame.event.wait()
-            # always check if running
-            # if true continue
-            # if false, close game
-            running = check_if_running(event, running)
-
-            # write title screen code here
-            pygame.display.flip()
-            
-        while screen == "game":
-            # wait for an event (left mouse click) to happen
-            event = pygame.event.wait()
-            # always check if running
-            # if true continue
-            # if false, close game
-            print("before check if running")
-            running = check_if_running(event, running)
-            print("after check if running ")
-            print("i am variable running",running)
-            
-            TicTacToe.game_loop(event, current_player)
+    while screen == "game":
+        # wait for an event (left mouse click) to happen
+        event = pygame.event.wait()
+        # always check if running
+        # if true continue
+        # if false, close game
+        running = check_if_running(event, running)
+        if running == False:
+            break
         
-        while screen == "end_screen":
-            # wait for an event (left mouse click) to happen
-            event = pygame.event.wait()
-            # always check if running
-            # if true continue
-            # if false, close game
-            running = check_if_running(event, running)
-            
-            # write end screen code here
-            pygame.display.flip()
+        TicTacToe.game_loop(event, current_player)
+    
+    while screen == "end_screen":
+        # wait for an event (left mouse click) to happen
+        event = pygame.event.wait()
+        # always check if running
+        # if true continue
+        # if false, close game
+        running = check_if_running(event, running)
+        if running == False:
+            break
+        # write end screen code here
+        pygame.display.flip()
         
 pygame.quit()
 
