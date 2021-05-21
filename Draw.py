@@ -22,7 +22,7 @@ for y in range(0,3):
 print (Rect_list)
 
 
-def game_Board(board_data):
+def game_screen(board_data):
     # Resets screen to white before 
     # drawing anything else on top.
     create_white_Screen()
@@ -133,6 +133,7 @@ def draw_O(x,y):
     pygame.draw.circle(SCREEN, (0,0,0), center, circle_radius, circle_width)
 
 def Win_Screen(self):
+    print("you won")
     pass
 def Stalemate_Screen(self):
     pass
