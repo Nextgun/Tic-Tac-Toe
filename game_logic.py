@@ -149,7 +149,7 @@ class TTT_Game():
             Win = False
             size_of_array = len(self.board_data) #length of board_data list
 
-         # this idea did not work
+         # this is
             # creates list with all variables needed to check win conditions
          #    variable_list = [ current_player.icon, size_of_array, score, Win]
 
@@ -164,13 +164,14 @@ class TTT_Game():
                 #---------------------------------------------------------
                 Win = self.horizontal_check(current_player.icon, size_of_array, score, Win)
                 #---------------------------------------------------------
-                
+                print("after all win checks")
+
             # if Win returns True, execute win function and win screen
             if Win == True:
                 print("you won",current_player.icon)
              #  D.Win_Screen()
              #   current_screen = "end_screen"
-              #  return current_screen
+             #   return current_screen
 
     def play_game(self, event_type, current_player, current_screen):
 
@@ -191,8 +192,7 @@ class TTT_Game():
 
         # checks if the current player has won
         self.check_win_condition(self.Move_xy_pos, current_player, current_screen)
-     # this is breaking the code and giving a black screen
-     #   return current_screen
+       # return current_screen
 
         # if the player did not win, swap the current player
         self.swap_current_player(self.Move_xy_pos, current_player)

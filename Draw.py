@@ -138,15 +138,5 @@ def Win_Screen(self):
 def Stalemate_Screen(self):
     pass
 
-
-
-def get_position(self):
-    for row in range(BOARD_SIZE):
-        for column in range(BOARD_SIZE):
-            print("the row is ", row+1)
-            print("the column is ", column+1)
-            pos = board_data[row][column]
-            print("position on board is ", pos)
-
 print ("i am Draw module and I work")
 
