@@ -2,8 +2,12 @@ import pygame
 
 # player needs to create the player and handle input
 class HumanPlayer():
-    def __init__(self, icon):
+    def __init__(self, icon, player_num):
+        self.player_num = player_num
         self.icon = icon
+
+    def __str__(self):
+        return f"I am player {self.player_num} and my icon is {self.icon}"
 
     def get_input(self, event):
     

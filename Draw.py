@@ -22,25 +22,10 @@ for y in range(0,3):
 print (Rect_list)
 
 
-def game_screen(board_data):
-    # Resets screen to white before 
-    # drawing anything else on top.
-    create_white_Screen()
-    
-    # calls function to draws the shaded tiles
-    tile_shade()
+#_____________________________________________________________________________________
+# this section of code handles the drawing for the game_scene
 
-    # calls function to draw the grid lines
-    grid_lines()
-
-    # calls function that draws the players moves (X or O)
-    player_moves_on_board(board_data)
-
-def change_resolution(new_W, new_H):
-    WIDTH = new_W
-    HEIGHT = new_H
-
-# this code should create the SCREEN and return it, currently not working, not implemented
+# creates white screen to then redraw on top
 def create_white_Screen(WIDTH=640, HEIGHT=360):
     SCREEN = pygame.display.set_mode([WIDTH, HEIGHT])
     SCREEN.fill([255,255,255])
@@ -54,7 +39,6 @@ def tile_shade():
     # draws the gray rectangles
     for i in range(1,9,2):
         pygame.draw.rect(SCREEN, [197,197,197], Rect_list[i], 0)
-
 # Draws the lines that divide the grid>
 def grid_lines():
     # draws grid lines, is scalable to SCREEN size
@@ -70,9 +54,7 @@ def grid_lines():
     for line in gridlines_rects:
         pygame.draw.rect(SCREEN, [0,0,0], line, 0)
 
-# Iterates through board_data, 
-# and DRAWS player moves if available 
-# for each position on board.
+# Iterates through board_data, and DRAWS player moves accordingly.
 def player_moves_on_board(board_data):
     # nested loop to iterate through board_data info
     for y_row in range(BOARD_SIZE):
@@ -112,7 +94,6 @@ def draw_X(x,y):
     # draws both lines for the X icon
     pygame.draw.line(SCREEN, (0,0,0), start_pos, end_pos, line_width)
     pygame.draw.line(SCREEN, (0,0,0), start_pos2, end_pos2, line_width)
-
 # Function that draws an O on the ttt board.
 def draw_O(x,y):
     # calculates the center of the circle
@@ -132,11 +113,80 @@ def draw_O(x,y):
     # draws the circle for the O icon
     pygame.draw.circle(SCREEN, (0,0,0), center, circle_radius, circle_width)
 
-def Win_Screen(self):
-    print("you won")
-    pass
-def Stalemate_Screen(self):
-    pass
+def game_screen(board_data):
+    # Resets screen to white before 
+    # drawing anything else on top.
+    create_white_Screen()
+    
+    # calls function to draws the shaded tiles
+    tile_shade()
 
-print ("i am Draw module and I work")
+    # calls function to draw the grid lines
+    grid_lines()
 
+    # calls function that draws the players moves (X or O)
+    player_moves_on_board(board_data)
+
+#_____________________________________________________________________________________
+# this section of code handles the drawing for the end and stalemate scenes
+
+# play button
+def play_button():
+ #   draw_image = pygame.image.load("images/tictactoe_background.png")
+
+    Rect = pygame.Rect(WIDTH * 0.25, HEIGHT * 0.416 + HEIGHT * 0.0416, WIDTH * 0.5, HEIGHT * 0.166)
+    pygame.draw.rect(SCREEN, (255,255,255), Rect, 0)
+    pygame.draw.rect(SCREEN, (0,0,0), Rect, 3)
+
+# play again button
+def play_again_button():
+ #   draw_image = pygame.image.load("images/tictactoe_background.png")
+
+    Rect = pygame.Rect(WIDTH * 0.25, HEIGHT * 0.416 + HEIGHT * 0.0416, WIDTH * 0.5, HEIGHT * 0.166)
+    pygame.draw.rect(SCREEN, (255,255,255), Rect, 0)
+    pygame.draw.rect(SCREEN, (0,0,0), Rect, 3)
+
+# main menu button 
+def main_menu_button():
+ #   draw_image = pygame.image.load("images/tictactoe_background.png")
+
+    Rect = pygame.Rect(WIDTH * 0.25, HEIGHT * 0.75 - HEIGHT * 0.0416, WIDTH * 0.5, HEIGHT * 0.166)
+    pygame.draw.rect(SCREEN, (255,255,255), Rect, 0)
+    pygame.draw.rect(SCREEN, (0,0,0), Rect, 3)
+
+# draws Tic-Tac-Toe
+def draw_TTT_text():
+ #   ttt_image = pygame.image.load("images/tictactoe_background.png")
+
+    Rect = pygame.Rect(WIDTH * 0.166, HEIGHT * 0.0416, WIDTH * 0.666, HEIGHT * 0.333)
+    pygame.draw.rect(SCREEN, (255,255,255), Rect, 0)
+    pygame.draw.rect(SCREEN, (0,0,0), Rect, 3)
+
+# draws the It's a Draw! text
+def draw_text():
+ #   draw_image = pygame.image.load("images/tictactoe_background.png")
+
+    Rect = pygame.Rect(WIDTH * 0.166, HEIGHT * 0.0416, WIDTH * 0.666, HEIGHT * 0.333)
+    pygame.draw.rect(SCREEN, (255,255,255), Rect, 0)
+    pygame.draw.rect(SCREEN, (0,0,0), Rect, 3)
+
+# draws the Player [] Won! text
+def win_text():
+ #   ttt_image = pygame.image.load("images/tictactoe_background.png")
+
+    Rect = pygame.Rect(WIDTH * 0.166, HEIGHT * 0.0416, WIDTH * 0.666, HEIGHT * 0.333)
+    pygame.draw.rect(SCREEN, (255,255,255), Rect, 0)
+    pygame.draw.rect(SCREEN, (0,0,0), Rect, 3)
+
+# draws text on screen saying "the move you just tried to make is invalid try again"
+def invalid_move_text():
+    Rect = pygame.Rect(WIDTH * 0.166, HEIGHT * 0.0416, WIDTH * 0.666, HEIGHT * 0.333)
+    pygame.draw.rect(SCREEN, (255,255,255), Rect, 0)
+    pygame.draw.rect(SCREEN, (0,0,0), Rect, 3)
+    pygame.display.flip()
+
+
+# unused code
+def change_resolution(new_W, new_H):
+    WIDTH = new_W
+    HEIGHT = new_H
