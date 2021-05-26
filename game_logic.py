@@ -1,16 +1,30 @@
 import pygame
 import Draw as D
+import player as pl # imports my player module for tictactoe
+import time
+
+total_amounts_of_moves = D.BOARD_SIZE * D.BOARD_SIZE
+
+p1 = pl.HumanPlayer("X", 1) # creates player 1, a human
+p2 = pl.HumanPlayer("O", 2) # creates player 2, a human
+
+print(p1)
+print(p2)
 
 class TTT_Game():
     def __init__(self):
         self.create_board_data()
         self.Move_xy_pos = None
+        self.current_player = p1
+        self.move_count = 0
 
     def create_board_data(self):
+        # this is not scalable
         self.board_data = [[" "," "," "], 
                            [" "," "," "], 
                            [" "," "," "]]
 
+    # updates board data after a player makes a move
     def update_board_data(self, move_xy_pos, player_icon):
      #   print("inside update_board_data funciton")
         if move_xy_pos == None:
@@ -23,7 +37,22 @@ class TTT_Game():
             if self.board_data[y][x] == " ":
                 # if empty write in player move
                 self.board_data[y][x] = player_icon  
-            
+
+            # checks if tile is filled, if so skip it
+            else:
+                # I skip the tile by 
+                D.invalid_move_text()
+                print("i am after invalid move draw function")
+
+                # decrement the move counter by 1
+                self.move_count -= 1
+
+                time.sleep(0.8)
+
+                # Swaps here to opposite player to get 
+                # reswapped back to current player later in the code.
+                self.swap_current_player(move_xy_pos)
+
 
     # checks horizontal win
     def horizontal_check(self, player_icon, size_of_array, score, Win):
@@ -122,23 +151,23 @@ class TTT_Game():
             
         return Win
 
-    def swap_current_player(self, move_xy_pos, player):
+    def swap_current_player(self, move_xy_pos):
         # if there was no player move, do nothing
         if move_xy_pos == None:
-            return
+            pass
         # if there was a player move, run code
         else:
-            # checks if player has icon X
-            if player.icon == "X":
-                # if so, change icon to O
-                player.icon = "O"
+            # checks if it is player 1
+            if self.current_player == p1:
+                # if so, change to player 2 
+                self.current_player = p2
                 
-            # checks if player has icon O
-            elif player.icon == "O":
-                # if so, change icon to X
-                player.icon = "X"
+            # checks if it is player 2
+            elif self.current_player == p2:
+                # if so, change to player 1
+                self.current_player = p1
 
-    def check_win_condition(self,move_xy_pos, current_player, current_screen):
+    def check_win_condition(self, move_xy_pos, current_player):
         # if there was no player move, do nothing
         if move_xy_pos == None:
             return
@@ -168,18 +197,26 @@ class TTT_Game():
 
             # if Win returns True, execute win function and win screen
             if Win == True:
-                print("you won",current_player.icon)
+                print("you won",current_player)
+
+                return "over"
              #  D.Win_Screen()
              #   current_screen = "end_screen"
              #   return current_screen
 
-    def play_game(self, event_type, current_player, current_screen):
+    # counts how many moves have been made to check for a draw
+    def count_moves(self, move_xy_pos):
+        if move_xy_pos == None:
+            pass
+        else:
+            self.move_count += 1
+            if self.move_count == total_amounts_of_moves:
+                return "draw"
 
-        # draw board / game screen
-        D.game_screen(self.board_data) 
+    def play_game(self, event_type):
 
         # get player input
-        self.Move_xy_pos = current_player.get_input(event_type)
+        self.Move_xy_pos = self.current_player.get_input(event_type)
 
         #***********************************************************************
         # bug found
@@ -188,14 +225,25 @@ class TTT_Game():
         #***********************************************************************
 
         # updates board data with player move and player icon
-        self.update_board_data(self.Move_xy_pos, current_player.icon)
+        self.update_board_data(self.Move_xy_pos, self.current_player.icon)
+
+        # draw board / game screen
+        D.game_screen(self.board_data) 
 
         # checks if the current player has won
-        self.check_win_condition(self.Move_xy_pos, current_player, current_screen)
-       # return current_screen
+        game_state_check = self.check_win_condition(self.Move_xy_pos, self.current_player)
+        if game_state_check == "over":
+            info = ["over", self.current_player]
+            return info
 
+        # checks if moves equals maximum amount, if so, stalemate
+        game_state_check = self.count_moves(self.Move_xy_pos)
+        if game_state_check == "draw":
+            info = ["draw", self.current_player]
+            return info
+            
         # if the player did not win, swap the current player
-        self.swap_current_player(self.Move_xy_pos, current_player)
+        self.swap_current_player(self.Move_xy_pos)
     
         # updates screen to reflect new changes; (updates next frame)
         pygame.display.flip()
