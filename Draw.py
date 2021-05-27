@@ -12,6 +12,9 @@ tile_H = HEIGHT / BOARD_SIZE # used to draw everything by scale rather then coor
 
 # creates the screen to draw everything on
 SCREEN = pygame.display.set_mode([WIDTH, HEIGHT])
+# creates a caption for the window
+pygame.display.set_caption("Awesome Sauce Tic-Tac-Toe Game For Gamers")
+# fills the screen with the color white
 SCREEN.fill([255,255,255])
 
 # creates the rectangles needed for logic and drawing and player
@@ -131,40 +134,86 @@ def game_screen(board_data):
 # this section of code handles the drawing for the end and stalemate scenes
 
 # play button
-def play_button():
- #   draw_image = pygame.image.load("images/tictactoe_background.png")
+def play_button(event):
+    # sets the x and y variables to draw everything in the same position
+    x,y = WIDTH * 0.25, HEIGHT * 0.416 + HEIGHT * 0.0416
 
-    Rect = pygame.Rect(WIDTH * 0.25, HEIGHT * 0.416 + HEIGHT * 0.0416, WIDTH * 0.5, HEIGHT * 0.166)
-    pygame.draw.rect(SCREEN, (255,255,255), Rect, 0)
-    pygame.draw.rect(SCREEN, (0,0,0), Rect, 3)
+    # creates rectangle used for the collision
+    Rect = pygame.Rect(x, y, WIDTH * 0.5, HEIGHT * 0.166)
+    pygame.draw.rect(SCREEN, (255,255,255), Rect, 0) # draws the rectangle/button as white onto screen
+    
+    draw_image = pygame.image.load("image_ttt/play_game_small.png") # loads the image so pygame can draw it
+    SCREEN.blit(draw_image, (x, y)) # draws the image onto the screen
+
+    pygame.draw.rect(SCREEN, (0,0,0), Rect, 3) # draws a black border around the button
+
+    # checks if mouse button is clicked down
+    if event.type == pygame.MOUSEBUTTONDOWN: 
+        if event.button == 1: # left mouse button
+            # if there is a collision between where the player clicked and the button
+            if Rect.collidepoint(pygame.mouse.get_pos()):
+                return True
 
 # play again button
-def play_again_button():
- #   draw_image = pygame.image.load("images/tictactoe_background.png")
+def play_again_button(event):
+    # sets the x and y variables to draw everything in the same position
+    x,y = WIDTH * 0.25, HEIGHT * 0.416 + HEIGHT * 0.0416
 
-    Rect = pygame.Rect(WIDTH * 0.25, HEIGHT * 0.416 + HEIGHT * 0.0416, WIDTH * 0.5, HEIGHT * 0.166)
-    pygame.draw.rect(SCREEN, (255,255,255), Rect, 0)
-    pygame.draw.rect(SCREEN, (0,0,0), Rect, 3)
+    # creates rectangle used for the collision
+    Rect = pygame.Rect(x, y, WIDTH * 0.5, HEIGHT * 0.166)
+    pygame.draw.rect(SCREEN, (255,255,255), Rect, 0) # draws the rectangle/button as white onto screen
+   
+    draw_image = pygame.image.load("image_ttt/play_again_small.png") # loads the image so pygame can draw it
+    SCREEN.blit(draw_image, (x, y)) # draws the image onto the screen
+
+    pygame.draw.rect(SCREEN, (0,0,0), Rect, 3) # draws a black border around the rectangle
+
+    # checks if mouse button is clicked down
+    if event.type == pygame.MOUSEBUTTONDOWN: 
+        if event.button == 1: # left mouse button
+            # if there is a collision between where the player clicked and the button
+            if Rect.collidepoint(pygame.mouse.get_pos()):
+                return True
 
 # main menu button 
-def main_menu_button():
- #   draw_image = pygame.image.load("images/tictactoe_background.png")
+def main_menu_button(event):
+    # sets the x and y variables to draw everything in the same position
+    x,y = WIDTH * 0.25, HEIGHT * 0.75 - HEIGHT * 0.0416
 
-    Rect = pygame.Rect(WIDTH * 0.25, HEIGHT * 0.75 - HEIGHT * 0.0416, WIDTH * 0.5, HEIGHT * 0.166)
-    pygame.draw.rect(SCREEN, (255,255,255), Rect, 0)
-    pygame.draw.rect(SCREEN, (0,0,0), Rect, 3)
+    # creates rectangle used for the collision
+    Rect = pygame.Rect(x, y, WIDTH * 0.5, HEIGHT * 0.166)
+    pygame.draw.rect(SCREEN, (255,255,255), Rect, 0) # draws the rectangle as white onto screen
+    pygame.draw.rect(SCREEN, (0,0,0), Rect, 3) # draws a black border around the rectangle
+
+    draw_image = pygame.image.load("image_ttt/main_menu_small.png")# loads the image so pygame can draw it
+    SCREEN.blit(draw_image, (x, y)) # draws the image onto the screen
+
+
+
+    print("inside main menu button")    
+    # checks if mouse button is clicked down
+    if event.type == pygame.MOUSEBUTTONDOWN: 
+        if event.button == 1: # left mouse button
+            # if there is a collision between where the player clicked and the button
+            print("inside if theres a left mouse button click")
+            if Rect.collidepoint(pygame.mouse.get_pos()):
+                print("inside rect.c")
+                print("inside main menu button")
+                print("for some reason i am automatically activating when im not supposed to ")
+                return True
 
 # draws Tic-Tac-Toe
-def draw_TTT_text():
- #   ttt_image = pygame.image.load("images/tictactoe_background.png")
+def draw_TTT_Background():
+ #  ttt_image = pygame.image.load("image_ttt/tictactoe_background.png")
 
+    # creates rectangle used for the collision
     Rect = pygame.Rect(WIDTH * 0.166, HEIGHT * 0.0416, WIDTH * 0.666, HEIGHT * 0.333)
-    pygame.draw.rect(SCREEN, (255,255,255), Rect, 0)
-    pygame.draw.rect(SCREEN, (0,0,0), Rect, 3)
+    pygame.draw.rect(SCREEN, (255,255,255), Rect, 0) # draws the rectangle as white onto screen
+    pygame.draw.rect(SCREEN, (0,0,0), Rect, 3) # draws a black border around the rectangle
 
 # draws the It's a Draw! text
 def draw_text():
- #   draw_image = pygame.image.load("images/tictactoe_background.png")
+ #   draw_image = pygame.image.load("image_ttt/tictactoe_background.png")
 
     Rect = pygame.Rect(WIDTH * 0.166, HEIGHT * 0.0416, WIDTH * 0.666, HEIGHT * 0.333)
     pygame.draw.rect(SCREEN, (255,255,255), Rect, 0)
@@ -172,7 +221,7 @@ def draw_text():
 
 # draws the Player [] Won! text
 def win_text():
- #   ttt_image = pygame.image.load("images/tictactoe_background.png")
+ #   ttt_image = pygame.image.load("image_ttt/tictactoe_background.png")
 
     Rect = pygame.Rect(WIDTH * 0.166, HEIGHT * 0.0416, WIDTH * 0.666, HEIGHT * 0.333)
     pygame.draw.rect(SCREEN, (255,255,255), Rect, 0)
@@ -180,6 +229,9 @@ def win_text():
 
 # draws text on screen saying "the move you just tried to make is invalid try again"
 def invalid_move_text():
+ #   ttt_image = pygame.image.load("image_ttt/invalid_move_text.png")
+
+
     Rect = pygame.Rect(WIDTH * 0.166, HEIGHT * 0.0416, WIDTH * 0.666, HEIGHT * 0.333)
     pygame.draw.rect(SCREEN, (255,255,255), Rect, 0)
     pygame.draw.rect(SCREEN, (0,0,0), Rect, 3)

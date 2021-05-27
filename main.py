@@ -39,23 +39,28 @@ class Scenes():
     current_player = None
 
     def __init__(self):
-        self.scene = "game_scene"
+        self.event = None
+        self.scene = "end_scene"
 
     def title_scene(self, event):
         # draw white screen
         D.create_white_Screen()
 
-        # draw [Tic-Tac-Toe]
+        # draw [Tic-Tac-Toe Background]
 
 
         # draw a play game button
-        D.play_button()
+        if D.play_button(event):
+            # sets event to none so that nothing immediatly happens when you change scenes
+            self.event = None
+
+            self.scene = "game_scene" # changes the current scene
 
         # write title screen code here
         print("i am in", self.scene)
     
     def game_scene(self, event):
-
+        
         game_state = "playing"
         info = TicTacToe.play_game(event)
         print("i am info list", info)
@@ -66,7 +71,7 @@ class Scenes():
 
         if game_state == "over":
             self.scene = "end_scene"
-        if game_state == "draw":
+        elif game_state == "draw":
             self.scene = "stalemate_scene"
             
 
@@ -74,34 +79,43 @@ class Scenes():
         # draw [player [current player] won!]
         D.win_text()
 
-        # draw a play again button
-        D.play_again_button()
-        
-        # draw a main menu button
-        D.main_menu_button()
+
+        print("right before play again button in end scene ")
+        if D.play_again_button(event): # draws a play again button
+            print("insie play again button before setting scene to game")
+            self.scene = "game_scene"
+            print("insie play again button after setting scene to game")
+
+        print("right before main menu button in end scene ")
+        elif D.main_menu_button(event): # draws a main menu button
+            print("insie main menu button before setting scene to game")
+            self.scene = "title_scene"
+            print("insie main menu button after setting scene to game")
     
     def stalemate_scene(self, event):
         # draw [ its a draw! ] 
         D.draw_text()
 
-        # draw a play again button
-        D.play_again_button()
+        if D.play_again_button(event): # draw a play again button
+            self.scene = "game_scene"
         
-        # draw a main menu button
-        D.main_menu_button()
+        if D.main_menu_button(event): # draw a main menu button
+            self.scene = "title_scene"
 
     def scene_manager(self, event):
+        self.event = event
+
         if self.scene == "title_scene":
-            self.title_scene(event)
+            self.title_scene(self.event)
             #---------------------------------------------------------------------
         if self.scene == "game_scene":
-            self.game_scene(event)
+            self.game_scene(self.event)
             #---------------------------------------------------------------------
         if self.scene == "end_scene":
-            self.end_scene(event)
+            self.end_scene(self.event)
             #---------------------------------------------------------------------
         if self.scene == "stalemate_scene":
-            self.stalemate_scene(event)
+            self.stalemate_scene(self.event)
             #---------------------------------------------------------------------
 
 # object creation
@@ -119,5 +133,4 @@ if __name__ == "__main__":
         # update the display
         pygame.display.flip()
     pygame.quit()
-
 

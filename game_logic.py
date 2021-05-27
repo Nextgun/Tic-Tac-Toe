@@ -3,7 +3,7 @@ import Draw as D
 import player as pl # imports my player module for tictactoe
 import time
 
-total_amounts_of_moves = D.BOARD_SIZE * D.BOARD_SIZE
+max_amounts_of_moves = D.BOARD_SIZE * D.BOARD_SIZE
 
 p1 = pl.HumanPlayer("X", 1) # creates player 1, a human
 p2 = pl.HumanPlayer("O", 2) # creates player 2, a human
@@ -151,6 +151,26 @@ class TTT_Game():
             
         return Win
 
+
+    def win_conditions_grouped_together(self, current_player_icon, size_of_array, score, Win):
+        #---------------------------------------------------------
+        Win = self.vertical_check(current_player_icon, size_of_array, score, Win)  
+        if Win == True:
+            return Win                  
+        #---------------------------------------------------------
+        Win = self.left_to_right_diagnal_check(current_player_icon, size_of_array, score, Win)
+        if Win == True:
+            return Win       
+        #---------------------------------------------------------
+        Win = self.right_to_left_diagnal_check(current_player_icon, size_of_array, score, Win)
+        if Win == True:
+            return Win       
+        #---------------------------------------------------------
+        Win = self.horizontal_check(current_player_icon, size_of_array, score, Win)
+        if Win == True:
+            return Win       
+        #---------------------------------------------------------
+
     def swap_current_player(self, move_xy_pos):
         # if there was no player move, do nothing
         if move_xy_pos == None:
@@ -166,6 +186,14 @@ class TTT_Game():
             elif self.current_player == p2:
                 # if so, change to player 1
                 self.current_player = p1
+
+    def reset_game_board(self):
+        for y in range(D.BOARD_SIZE):
+            for x in range(D.BOARD_SIZE):
+                if self.board_data[y][x] != " ":
+                    # if empty write in player move
+                    self.board_data[y][x] = " "
+
 
     def check_win_condition(self, move_xy_pos, current_player):
         # if there was no player move, do nothing
@@ -184,20 +212,28 @@ class TTT_Game():
 
             # when Win is False, run all checks
             if Win == False:
+                Win = self.win_conditions_grouped_together(current_player.icon, size_of_array, score, Win)
+             #
                 #---------------------------------------------------------
-                Win = self.vertical_check(current_player.icon, size_of_array, score, Win)
+              #  Win = self.vertical_check(current_player.icon, size_of_array, score, Win)                    
                 #---------------------------------------------------------
-                Win = self.left_to_right_diagnal_check(current_player.icon, size_of_array, score, Win)
+              #  Win = self.left_to_right_diagnal_check(current_player.icon, size_of_array, score, Win)
                 #---------------------------------------------------------
-                Win = self.right_to_left_diagnal_check(current_player.icon, size_of_array, score, Win)
+              #  Win = self.right_to_left_diagnal_check(current_player.icon, size_of_array, score, Win)
                 #---------------------------------------------------------
-                Win = self.horizontal_check(current_player.icon, size_of_array, score, Win)
+              #  Win = self.horizontal_check(current_player.icon, size_of_array, score, Win)
                 #---------------------------------------------------------
+                
                 print("after all win checks")
 
             # if Win returns True, execute win function and win screen
             if Win == True:
                 print("you won",current_player)
+
+                # resets the game board data to be at starting position
+                self.reset_game_board()
+                # resets the draw counter to be at starting postion
+                self.move_count = 0
 
                 return "over"
              #  D.Win_Screen()
@@ -209,12 +245,17 @@ class TTT_Game():
         if move_xy_pos == None:
             pass
         else:
+            # increment the move counter for every move taken
             self.move_count += 1
-            if self.move_count == total_amounts_of_moves:
+            # checks if the max amount of moves have been played
+            if self.move_count == max_amounts_of_moves:
+                # if the game draws reset move count to starting postion
+                self.move_count = 0
                 return "draw"
 
     def play_game(self, event_type):
 
+        
         # get player input
         self.Move_xy_pos = self.current_player.get_input(event_type)
 

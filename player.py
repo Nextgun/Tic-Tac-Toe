@@ -12,7 +12,10 @@ class HumanPlayer():
     def get_input(self, event):
     
         # checks if mouse button is clicked down
-        if event.type == pygame.MOUSEBUTTONDOWN: 
+        # testing code to skip not update move until a move has been made
+        if event == None:
+            pass
+        elif event.type == pygame.MOUSEBUTTONDOWN: 
             if event.button == 1: # left mouse button
                 return self.check_button_collision()
 
