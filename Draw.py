@@ -19,8 +19,8 @@ SCREEN.fill([255,255,255])
 
 # creates the rectangles needed for logic and drawing and player
 Rect_list = []
-for y in range(0,3):
-    for x in range(0,3):
+for y in range(BOARD_SIZE):
+    for x in range(BOARD_SIZE):
         Rect_list.append(pygame.Rect(x * tile_W, y * tile_H, tile_W, tile_H))
 print (Rect_list)
 
@@ -35,15 +35,42 @@ def create_white_Screen(WIDTH=640, HEIGHT=360):
     #return SCREEN
 
 # Draws the shading in the rectangles.
+AMOUNT_OF_TILES = BOARD_SIZE * BOARD_SIZE
 def tile_shade():
     # draws the white rectangles
-    for i in range(0,9,2):
+    for i in range(0,AMOUNT_OF_TILES,2):
         pygame.draw.rect(SCREEN, [255,255,255], Rect_list[i], 0)
     # draws the gray rectangles
-    for i in range(1,9,2):
+    for i in range(1,AMOUNT_OF_TILES,2):
         pygame.draw.rect(SCREEN, [197,197,197], Rect_list[i], 0)
-# Draws the lines that divide the grid>
+
+
+ALL_LINES = []
+
+def create_vertical_lines():
+    counter = 1
+    for num_Lines in range(BOARD_SIZE):
+        line = (WIDTH * (counter/BOARD_SIZE), 0, 2, HEIGHT)
+        ALL_LINES.append(line)
+        counter += 1
+# calls the function so that the lines are created an exist
+create_vertical_lines()
+
+def create_horizontal_lines():
+    counter = 1
+    for num_Lines in range(BOARD_SIZE):
+        line = (0, HEIGHT * (counter/BOARD_SIZE), WIDTH, 0)
+        ALL_LINES.append(line)
+        counter += 1
+# calls the function so that the lines are created an exist
+create_horizontal_lines()
+
 def grid_lines():
+    for line in ALL_LINES:
+        pygame.draw.rect(SCREEN, [0,0,0], line, 0)
+
+# Draws the lines that divide the grid>
+def old_grid_lines():
     # draws grid lines, is scalable to SCREEN size
     # line info is actually a rectangle
     # order is:          x pos      , y pos       , width, height

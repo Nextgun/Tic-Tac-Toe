@@ -40,7 +40,7 @@ class Scenes():
 
     def __init__(self):
         self.event = None
-        self.scene = "end_scene"
+        self.scene = "title_scene"
 
     def title_scene(self, event):
         # draw white screen
@@ -87,7 +87,7 @@ class Scenes():
             print("insie play again button after setting scene to game")
 
         print("right before main menu button in end scene ")
-        elif D.main_menu_button(event): # draws a main menu button
+        if D.main_menu_button(event): # draws a main menu button
             print("insie main menu button before setting scene to game")
             self.scene = "title_scene"
             print("insie main menu button after setting scene to game")
@@ -108,13 +108,13 @@ class Scenes():
         if self.scene == "title_scene":
             self.title_scene(self.event)
             #---------------------------------------------------------------------
-        if self.scene == "game_scene":
+        elif self.scene == "game_scene":
             self.game_scene(self.event)
             #---------------------------------------------------------------------
-        if self.scene == "end_scene":
+        elif self.scene == "end_scene":
             self.end_scene(self.event)
             #---------------------------------------------------------------------
-        if self.scene == "stalemate_scene":
+        elif self.scene == "stalemate_scene":
             self.stalemate_scene(self.event)
             #---------------------------------------------------------------------
 

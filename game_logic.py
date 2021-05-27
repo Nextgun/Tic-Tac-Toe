@@ -11,6 +11,8 @@ p2 = pl.HumanPlayer("O", 2) # creates player 2, a human
 print(p1)
 print(p2)
 
+
+
 class TTT_Game():
     def __init__(self):
         self.create_board_data()
@@ -18,11 +20,21 @@ class TTT_Game():
         self.current_player = p1
         self.move_count = 0
 
-    def create_board_data(self):
+    def nonScalable_boardData(self):
         # this is not scalable
         self.board_data = [[" "," "," "], 
                            [" "," "," "], 
                            [" "," "," "]]
+
+    # a scalable function to create our board data
+    def create_board_data(self):
+        self.board_data = []
+        xboardData = []
+        for y in range(D.BOARD_SIZE):
+            xboardData = []
+            self.board_data.append(xboardData)
+            for x in range(D.BOARD_SIZE):
+                xboardData.append(" ")
 
     # updates board data after a player makes a move
     def update_board_data(self, move_xy_pos, player_icon):
@@ -251,6 +263,8 @@ class TTT_Game():
             if self.move_count == max_amounts_of_moves:
                 # if the game draws reset move count to starting postion
                 self.move_count = 0
+                # reset game board data to starting position
+                self.reset_game_board()
                 return "draw"
 
     def play_game(self, event_type):
@@ -258,12 +272,6 @@ class TTT_Game():
         
         # get player input
         self.Move_xy_pos = self.current_player.get_input(event_type)
-
-        #***********************************************************************
-        # bug found
-        # if a player makes a move on a tile where there is already a move
-        # nothing happens (good), but the players turn gets skipped as well(bad)
-        #***********************************************************************
 
         # updates board data with player move and player icon
         self.update_board_data(self.Move_xy_pos, self.current_player.icon)
