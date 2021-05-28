@@ -1,11 +1,25 @@
 import pygame
+from easygui import enterbox
 # draw will recieve input and proccessing all the drawing
 # make functions for now. 
 # later I will convert into a class, maybe
 
 WIDTH = 640 # Default width 
 HEIGHT = 360 # Default height
-BOARD_SIZE = 3 # Default board size
+
+Header = "Awesome Sauce Tic-Tac-Toe Game For Gamers"
+
+BOARD_SIZE = enterbox("Type in a number for the size of the Tic-Tac-Toe board: ", Header)           
+while True:
+    if BOARD_SIZE.isnumeric():
+        if int(BOARD_SIZE) < 21:
+            break
+        else:
+            BOARD_SIZE = enterbox("uh oh, that number is too big, try a smaller one: ", Header)
+    elif not BOARD_SIZE.isnumeric():
+        BOARD_SIZE = enterbox("uh oh, thats not a number, try again: ", Header)
+        
+BOARD_SIZE = int(BOARD_SIZE) # Default board size
 
 tile_W = WIDTH / BOARD_SIZE # creating relative width and height variables 
 tile_H = HEIGHT / BOARD_SIZE # used to draw everything by scale rather then coordinates

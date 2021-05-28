@@ -20,12 +20,6 @@ class TTT_Game():
         self.current_player = p1
         self.move_count = 0
 
-    def nonScalable_boardData(self):
-        # this is not scalable
-        self.board_data = [[" "," "," "], 
-                           [" "," "," "], 
-                           [" "," "," "]]
-
     # a scalable function to create our board data
     def create_board_data(self):
         self.board_data = []
@@ -54,17 +48,13 @@ class TTT_Game():
             else:
                 # I skip the tile by 
                 D.invalid_move_text()
-                print("i am after invalid move draw function")
 
-                # decrement the move counter by 1
-                self.move_count -= 1
-
-                time.sleep(0.8)
+                self.move_count -= 1 # decrement the move counter by 1
+                time.sleep(0.8) # small delay for player to read image
 
                 # Swaps here to opposite player to get 
                 # reswapped back to current player later in the code.
                 self.swap_current_player(move_xy_pos)
-
 
     # checks horizontal win
     def horizontal_check(self, player_icon, size_of_array, score, Win):
@@ -90,6 +80,7 @@ class TTT_Game():
 
     # checks vertical win
     def vertical_check(self, player_icon, size_of_array, score, Win):
+
         #                      * 
         # win condition for    *      vertical
         #                      * 
@@ -111,7 +102,6 @@ class TTT_Game():
                 score = 0
 
         return Win
-
     # checks left to right diagnal win
     def left_to_right_diagnal_check(self, player_icon, size_of_array, score, Win):
         #                    *
@@ -163,7 +153,7 @@ class TTT_Game():
             
         return Win
 
-
+    # function with all win conditions functions together
     def win_conditions_grouped_together(self, current_player_icon, size_of_array, score, Win):
         #---------------------------------------------------------
         Win = self.vertical_check(current_player_icon, size_of_array, score, Win)  
@@ -206,7 +196,6 @@ class TTT_Game():
                     # if empty write in player move
                     self.board_data[y][x] = " "
 
-
     def check_win_condition(self, move_xy_pos, current_player):
         # if there was no player move, do nothing
         if move_xy_pos == None:
@@ -218,39 +207,18 @@ class TTT_Game():
             Win = False
             size_of_array = len(self.board_data) #length of board_data list
 
-         # this is
-            # creates list with all variables needed to check win conditions
-         #    variable_list = [ current_player.icon, size_of_array, score, Win]
-
             # when Win is False, run all checks
             if Win == False:
+                # runs the win condition functions to check if someone won
                 Win = self.win_conditions_grouped_together(current_player.icon, size_of_array, score, Win)
-             #
-                #---------------------------------------------------------
-              #  Win = self.vertical_check(current_player.icon, size_of_array, score, Win)                    
-                #---------------------------------------------------------
-              #  Win = self.left_to_right_diagnal_check(current_player.icon, size_of_array, score, Win)
-                #---------------------------------------------------------
-              #  Win = self.right_to_left_diagnal_check(current_player.icon, size_of_array, score, Win)
-                #---------------------------------------------------------
-              #  Win = self.horizontal_check(current_player.icon, size_of_array, score, Win)
-                #---------------------------------------------------------
-                
-                print("after all win checks")
 
             # if Win returns True, execute win function and win screen
             if Win == True:
-                print("you won",current_player)
-
                 # resets the game board data to be at starting position
                 self.reset_game_board()
                 # resets the draw counter to be at starting postion
                 self.move_count = 0
-
                 return "over"
-             #  D.Win_Screen()
-             #   current_screen = "end_screen"
-             #   return current_screen
 
     # counts how many moves have been made to check for a draw
     def count_moves(self, move_xy_pos):
