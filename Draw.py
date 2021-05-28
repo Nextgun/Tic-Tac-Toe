@@ -38,11 +38,12 @@ def create_white_Screen(WIDTH=640, HEIGHT=360):
 AMOUNT_OF_TILES = BOARD_SIZE * BOARD_SIZE
 def tile_shade():
     # draws the white rectangles
-    for i in range(0,AMOUNT_OF_TILES,2):
-        pygame.draw.rect(SCREEN, [255,255,255], Rect_list[i], 0)
+    for rectangle in range(0,AMOUNT_OF_TILES,2):
+        pygame.draw.rect(SCREEN, [255,255,255], Rect_list[rectangle], 0)
+
     # draws the gray rectangles
-    for i in range(1,AMOUNT_OF_TILES,2):
-        pygame.draw.rect(SCREEN, [197,197,197], Rect_list[i], 0)
+    for rectangle in range(1,AMOUNT_OF_TILES,2):
+        pygame.draw.rect(SCREEN, [197,197,197], Rect_list[rectangle], 0)
 
 
 ALL_LINES = []
@@ -69,20 +70,6 @@ def grid_lines():
     for line in ALL_LINES:
         pygame.draw.rect(SCREEN, [0,0,0], line, 0)
 
-# Draws the lines that divide the grid>
-def old_grid_lines():
-    # draws grid lines, is scalable to SCREEN size
-    # line info is actually a rectangle
-    # order is:          x pos      , y pos       , width, height
-    gridlines_rects = [ [WIDTH * 1/3, 0           , 2    , HEIGHT],
-                        [WIDTH * 2/3, 0           , 2    , HEIGHT],
-                        [0          , HEIGHT * 1/3, WIDTH, 0], 
-                        [0          , HEIGHT * 2/3, WIDTH, 0]      ]
-
-    # Iterates through the lines in gridlines list
-    # and draws them.
-    for line in gridlines_rects:
-        pygame.draw.rect(SCREEN, [0,0,0], line, 0)
 
 # Iterates through board_data, and DRAWS player moves accordingly.
 def player_moves_on_board(board_data):
@@ -214,58 +201,70 @@ def main_menu_button(event):
 
     draw_image = pygame.image.load("image_ttt/main_menu_small.png")# loads the image so pygame can draw it
     SCREEN.blit(draw_image, (x, y)) # draws the image onto the screen
-
-
-
-    print("inside main menu button")    
+  
     # checks if mouse button is clicked down
     if event.type == pygame.MOUSEBUTTONDOWN: 
         if event.button == 1: # left mouse button
             # if there is a collision between where the player clicked and the button
-            print("inside if theres a left mouse button click")
             if Rect.collidepoint(pygame.mouse.get_pos()):
-                print("inside rect.c")
-                print("inside main menu button")
-                print("for some reason i am automatically activating when im not supposed to ")
                 return True
 
 # draws Tic-Tac-Toe
 def draw_TTT_Background():
- #  ttt_image = pygame.image.load("image_ttt/tictactoe_background.png")
-
-    # creates rectangle used for the collision
-    Rect = pygame.Rect(WIDTH * 0.166, HEIGHT * 0.0416, WIDTH * 0.666, HEIGHT * 0.333)
-    pygame.draw.rect(SCREEN, (255,255,255), Rect, 0) # draws the rectangle as white onto screen
-    pygame.draw.rect(SCREEN, (0,0,0), Rect, 3) # draws a black border around the rectangle
+    ttt_image = pygame.image.load("image_ttt/tictactoe_background.png") # loads the ttt background image
+    SCREEN.blit(ttt_image, (0,0)) # draws the background
 
 # draws the It's a Draw! text
-def draw_text():
- #   draw_image = pygame.image.load("image_ttt/tictactoe_background.png")
+def its_a_draw_text():
+    x,y = WIDTH * 0.166, HEIGHT * 0.0416
 
-    Rect = pygame.Rect(WIDTH * 0.166, HEIGHT * 0.0416, WIDTH * 0.666, HEIGHT * 0.333)
-    pygame.draw.rect(SCREEN, (255,255,255), Rect, 0)
-    pygame.draw.rect(SCREEN, (0,0,0), Rect, 3)
+    Rect = pygame.Rect(x, y, WIDTH * 0.666, HEIGHT * 0.333) # creates rectangle to draw border on
 
-# draws the Player [] Won! text
+    draw_image = pygame.image.load("image_ttt/its_a_draw.png") # loads the its a draw text
+    SCREEN.blit(draw_image, (x,y)) # draws the its a draw text
+
+    pygame.draw.rect(SCREEN, (0,0,0), Rect, 3) # draws black border 
+
+# draws the Someone Won text
 def win_text():
- #   ttt_image = pygame.image.load("image_ttt/tictactoe_background.png")
+    x,y = WIDTH * 0.166, HEIGHT * 0.0416
 
-    Rect = pygame.Rect(WIDTH * 0.166, HEIGHT * 0.0416, WIDTH * 0.666, HEIGHT * 0.333)
-    pygame.draw.rect(SCREEN, (255,255,255), Rect, 0)
-    pygame.draw.rect(SCREEN, (0,0,0), Rect, 3)
+    Rect = pygame.Rect(x, y, WIDTH * 0.666, HEIGHT * 0.333) # creates rectangle to draw border on
+
+    win_image = pygame.image.load("image_ttt/someone_won.png") # loads the win text
+    SCREEN.blit(win_image, (x,y)) # draws the win text
+
+    pygame.draw.rect(SCREEN, (0,0,0), Rect, 3) # draws black border 
 
 # draws text on screen saying "the move you just tried to make is invalid try again"
 def invalid_move_text():
- #   ttt_image = pygame.image.load("image_ttt/invalid_move_text.png")
+    x,y = WIDTH * 0.166, HEIGHT * 0.0416
 
+    Rect = pygame.Rect(x, y, WIDTH * 0.666, HEIGHT * 0.333) # creates rectangle to draw border on
 
-    Rect = pygame.Rect(WIDTH * 0.166, HEIGHT * 0.0416, WIDTH * 0.666, HEIGHT * 0.333)
-    pygame.draw.rect(SCREEN, (255,255,255), Rect, 0)
-    pygame.draw.rect(SCREEN, (0,0,0), Rect, 3)
-    pygame.display.flip()
+    invalid_image = pygame.image.load("image_ttt/invalid_move.png") # loads the invalid move image
+    SCREEN.blit(invalid_image, (x,y)) # draws invalid move image
+
+    pygame.draw.rect(SCREEN, (0,0,0), Rect, 3) # draws black border 
+    pygame.display.flip() # updates display
 
 
 # unused code
 def change_resolution(new_W, new_H):
     WIDTH = new_W
     HEIGHT = new_H
+
+# Draws the lines that divide the grid>
+def old_grid_lines():
+    # draws grid lines, is scalable to SCREEN size
+    # line info is actually a rectangle
+    # order is:          x pos      , y pos       , width, height
+    gridlines_rects = [ [WIDTH * 1/3, 0           , 2    , HEIGHT],
+                        [WIDTH * 2/3, 0           , 2    , HEIGHT],
+                        [0          , HEIGHT * 1/3, WIDTH, 0], 
+                        [0          , HEIGHT * 2/3, WIDTH, 0]      ]
+
+    # Iterates through the lines in gridlines list
+    # and draws them.
+    for line in gridlines_rects:
+        pygame.draw.rect(SCREEN, [0,0,0], line, 0)
